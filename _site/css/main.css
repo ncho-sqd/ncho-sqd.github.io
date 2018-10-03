@@ -1,5 +1,6 @@
-body {
-    margin: 60px auto;
+html{
+    margin:    50px auto;
+    max-width: 900px;
     width: 70%;
 }
 nav ul, footer ul {
@@ -11,6 +12,9 @@ nav ul, footer ul {
 nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
+}
+ul {
+    list-style: none;
 }
 a {
     text-decoration: none;
