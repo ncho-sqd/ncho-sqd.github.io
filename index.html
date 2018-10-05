@@ -7,8 +7,8 @@ title: Curious Nacho
 <ul>
   {% for post in site.posts %}
     <li>
-      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-      <p>{{ post.excerpt }}</p>
+      <h2>{{ page.category }}</h4>
+      <h3><a href="{{ post.url }}">{{ post.title }} </a> {{ ": " | append: post.description }}</h3>
     </li>
   {% endfor %}
 </ul>
