@@ -1,2 +1,5 @@
 # google analytics
 google_analytics: UA-126810277-1
+
+# set encoding
+encoding: utf-8
