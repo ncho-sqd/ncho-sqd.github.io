@@ -12,13 +12,13 @@ POST_NAME="${NEW_FILENAME}.md"
 IMG_DIR="${NEW_FILENAME}_files"
  
 # call nbconvert
-jupyter nbconvert --to markdown $FILE --output-dir ~/git/blog/_posts --output $NEW_FILENAME
+jupyter nbconvert --to markdown $FILE --output-dir ~/git/blog/_posts --output $NEW_FILENAME --no-input
 
 # rename image files in markdown to moved /images folder (to be moved)
 for fp in ~/git/blog/_posts/$IMG_DIR/*; do
     FN=$IMG_DIR/`basename $fp`;
-    #echo /images/$FN;
-    sed -i '' "s#$FN#/images/$FN#g" ~/git/blog/_posts/$POST_NAME;
+    # change image path and center image
+    sed -i '' "s#($FN)#(/images/$FN){: .center-image }#g" ~/git/blog/_posts/$POST_NAME;
 done
 
 # move image folder automatically created under _post to /image folder

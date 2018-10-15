@@ -45,3 +45,35 @@ ul.posts {
 ul.posts li {
     list-style: none;
 }
+
+
+
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border:2px solid #ffffff00;
+    margin-left:auto; 
+    margin-right:auto;
+    border-bottom: solid;
+}
+
+th{
+    border:2px solid #ffffff00;
+}
+
+td{
+    border:1px solid #ffffff00;
+}
+
+.center-image
+{
+    margin: 0 auto;
+    display: block;
+}
+
+thead {
+    border-top: solid;
+    border-bottom: solid;
+    border-right: blank;    /* prevent colgroup border */
+    border-left: blank      /* prevent cell border */
+}
