@@ -75,5 +75,5 @@ thead {
     border-top: solid;
     border-bottom: solid;
     border-right: blank;    /* prevent colgroup border */
-    border-left: blank      /* prevent cell border */
+    border-left: blank;      /* prevent cell border */
 }
