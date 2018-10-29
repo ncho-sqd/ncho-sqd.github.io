@@ -160,4 +160,4 @@ Hope you enjoyed reading and stay tuned to see if my guesses are correct :)
 
 Python script to download json feed from Divvy, click [here](https://github.com/lacolombe-nowifi/etl/blob/dev/scrape_divvy_rss_feed.py).
 
-Jupyter notebook for analysis in this post, click [here]().
+Jupyter notebook for analysis in this post, click [here](https://github.com/ncho-sqd/ncho-sqd.github.io/blob/master/original_posts/analyze_divvy_rss_feed_part1.ipynb).
