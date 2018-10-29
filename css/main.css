@@ -13,9 +13,13 @@ nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
 }
-ul {
-    list-style: none;
+
+body ul li {
+    list-style-type: disc;
+    font-size: 1.5em;
+    line-height: 1.4em;
 }
+
 a {
     text-decoration: none;
     color: #999;
@@ -39,14 +43,13 @@ footer {
 
 ul.posts { 
     margin: 20px auto 40px; 
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
 ul.posts li {
     list-style: none;
+    font-size: 1em;
 }
-
-
 
 table{
     border-collapse: collapse;
