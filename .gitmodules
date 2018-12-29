@@ -1,0 +1,3 @@
+[submodule "theme-submodules/Balzac-for-Jekyll"]
+	path = theme-submodules/Balzac-for-Jekyll
+	url = https://github.com/ColeTownsend/Balzac-for-Jekyll.git
