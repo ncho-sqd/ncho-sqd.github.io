@@ -17,7 +17,7 @@
     
     <!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Theme Setup | Curious Nacho</title>
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.7.3" />
 <meta property="og:title" content="Theme Setup" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Instructions on how to install and use the Jekyll theme So Simple." />
@@ -416,7 +416,7 @@ bundle <span class="nb">exec </span>jekyll serve
 
 <p>To modify the site’s JavaScript files I setup a Grunt build script to lint/concatenate/minify all scripts into <code class="highlighter-rouge">scripts.min.js</code>. <a href="http://nodejs.org/">Install Node.js</a>, then <a href="http://gruntjs.com/getting-started">install Grunt</a>, and then finally install the dependencies for the theme contained in <code class="highlighter-rouge">package.json</code>:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
 </code></pre></div></div>
 
 <p>From the theme’s root, run <code class="highlighter-rouge">grunt</code> to concatenate JavaScript files, and optimize all .jpg, .png, and .svg files in the <code class="highlighter-rouge">images/</code> folder. You can also use <code class="highlighter-rouge">grunt dev</code> in combination with <code class="highlighter-rouge">jekyll build --watch</code> to watch for updates JS files that Grunt will then automatically re-build as you write your code which will in turn auto-generate your Jekyll site when developing locally.</p>
