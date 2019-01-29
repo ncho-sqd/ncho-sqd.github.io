@@ -13,4 +13,9 @@ var store = [{
         "excerpt":"In part 1, we looked at some basic stats for Divvy stations and how the bike counts change over time on Monday, October 8th, 2018. Most notable pattern was a huge decrease and a sharp spike in number of bikes parked during commute time (4:00-9:00pm). A weaker yet interesting pattern...","categories": ["docs"],
         "tags": [],
         "url": "http://localhost:4000/docs/analyze_divvy_rss_feed_part2/"
+      },{
+        "title": "Jupyter Notebook driven blog post",
+        "excerpt":"Jupyter notebook is a great tool for data science, and with effective use of nbconvert it’s also great for blogging static pages such as by using Jekyll. nbconvert, under Project Jupyter, allows you to easily convert .ipynb notebook files to various static formats such as markdown, HTML, PDF, LaTeX etc…...","categories": ["docs"],
+        "tags": [],
+        "url": "http://localhost:4000/docs/jupyter_nb_driven_report_blog/"
       }]
