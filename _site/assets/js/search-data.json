@@ -18,4 +18,9 @@ var store = [{
         "excerpt":"Jupyter notebook is a great tool for data science, and with effective use of nbconvert it’s also great for blogging static pages such as by using Jekyll. nbconvert, under Project Jupyter, allows you to easily convert .ipynb notebook files to various static formats such as markdown, HTML, PDF, LaTeX etc…...","categories": ["docs"],
         "tags": [],
         "url": "http://localhost:4000/docs/jupyter_nb_driven_report_blog/"
+      },{
+        "title": "Predicting genres of 45,000 Project Gutenberg books using NLP - BoW Approach",
+        "excerpt":"Project Gutenberg is a website that offers more than 58,000 free eBooks for which U.S. copyright have expired. It is very interesting text data for Natural Language Processing (NLP), as it is a huge body of text with pretty reliable labeling such as genre, author, publication year etc… Here, I’ll...","categories": ["docs"],
+        "tags": [],
+        "url": "http://localhost:4000/docs/classify_gutenberg_1/"
       }]

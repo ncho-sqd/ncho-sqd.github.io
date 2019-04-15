@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.1.1
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Predicting genres of 45,000 Project Gutenberg books using NLP - BoW Approach | Curious Nacho</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Predicting genres of 45,000 Project Gutenberg books using NLP - BoW Approach" />
+<meta name="author" content="nacho" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Project Gutenberg is a website that offers more than 58,000 free eBooks for which U.S. copyright have expired. It is very interesting text data for Natural Language Processing (NLP), as it is a huge body of text with pretty reliable labeling such as genre, author, publication year etc… Here, I’ll attempt to process approximately 45,000 English books from Project Gutenberg in order to find patterns between words and the genre of the books using a Bag-of-Words (BoW) approach." />
+<meta property="og:description" content="Project Gutenberg is a website that offers more than 58,000 free eBooks for which U.S. copyright have expired. It is very interesting text data for Natural Language Processing (NLP), as it is a huge body of text with pretty reliable labeling such as genre, author, publication year etc… Here, I’ll attempt to process approximately 45,000 English books from Project Gutenberg in order to find patterns between words and the genre of the books using a Bag-of-Words (BoW) approach." />
+<link rel="canonical" href="http://localhost:4000/docs/classify_gutenberg_1/" />
+<meta property="og:url" content="http://localhost:4000/docs/classify_gutenberg_1/" />
+<meta property="og:site_name" content="Curious Nacho" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-15T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@nacho" />
+<script type="application/ld+json">
+{"description":"Project Gutenberg is a website that offers more than 58,000 free eBooks for which U.S. copyright have expired. It is very interesting text data for Natural Language Processing (NLP), as it is a huge body of text with pretty reliable labeling such as genre, author, publication year etc… Here, I’ll attempt to process approximately 45,000 English books from Project Gutenberg in order to find patterns between words and the genre of the books using a Bag-of-Words (BoW) approach.","author":{"@type":"Person","name":"nacho"},"@type":"BlogPosting","url":"http://localhost:4000/docs/classify_gutenberg_1/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/images/nacho.jpg"},"name":"nacho"},"headline":"Predicting genres of 45,000 Project Gutenberg books using NLP - BoW Approach","dateModified":"2019-04-15T00:00:00-05:00","datePublished":"2019-04-15T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/docs/classify_gutenberg_1/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i">
+  <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+
+  <body class="layout--post  predicting-genres-of-45-000-project-gutenberg-books-using-nlp-bow-approach">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/">Home</a></li><li><a href="/docs/about/index.html">About</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/" class="site-logo" rel="home" title="Curious Nacho">
+        <img src="/images/nacho.jpg" class="site-logo-img animated fadeInDown" alt="Curious Nacho">
+      </a>
+    
+    
+    
+      
+        <div class="site-title animated fadeIn"><a href="/">Curious Nacho</a></div>
+      
+      <p class="site-description animated fadeIn" itemprop="description">Welcome curious person!</p>
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Predicting genres of 45,000 Project Gutenberg books using NLP - BoW Approach
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><div class="author-info">
+    <time class="page-date dt-published" datetime="2019-04-15T00:00:00-05:00"><a class="u-url" href="">April 15, 2019</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy">docs</li>
+  </ul>
+
+
+        
+
+      </div>
+
+      <div class="page-content">
+        <div class="e-content">
+          <p><a href="https://www.gutenberg.org/wiki/Main_Page">Project Gutenberg</a> is a website that offers more than <strong>58,000 free eBooks</strong>  for which U.S. copyright have expired.  It is very interesting text data for Natural Language Processing (NLP), as it is a huge body of text with pretty reliable labeling such as genre, author, publication year etc…  Here, I’ll attempt to process approximately 45,000 English books from Project Gutenberg in order to find patterns between words and the genre of the books using a <a href="https://en.wikipedia.org/wiki/Bag-of-words_model">Bag-of-Words (BoW)</a> approach.</p>
+
+<p><strong>TL;DR</strong>: My quick and dirty approach achieves an <strong>~80% classification accuracy</strong> on new text data.</p>
+
+<script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+<script type="text/javascript">if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>
+<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window._Plotly) {require(['plotly'],function(plotly) {window._Plotly=plotly;});}</script>
+
+<p><br /></p>
+
+<h2 id="visualizing-45000-books-in-2d-space">Visualizing ~45,000 books in 2D space</h2>
+
+<p>After parsing through and cleaning ~45,000 books (see bottom for details), I now have a relatively “clean” collection(bag) of words for each book.  From here, I want to see if any patterns reveal between the words used and the genre of the books.  <strong>Do certain words indicate that the book is of certain genre?  Is more frequent use of certain words/word combinations associated with specific genres?</strong>  Below interactive chart provides some evidence that such patterns likely exist.  <em>Click on the legend to turn off certain series.  Double click to isolate series.  Double click again to bring all series back</em>.</p>
+<iframe width="80%" height="700" frameborder="0" scrolling="no" src="/images/2019-04-15-classify_gutenberg_1_files/tsne.html"></iframe>
+<p>The chart above positons each of the ~45,000 books in 2D space based on the book’s collection of words color-coded by <a href="https://www.loc.gov/catdir/cpso/lcco/">Library of Congress Classification</a>.  Books are written with many distinct words (certainly more than 2) so visualizing their positions on 2D space based on combinations of common/different word usage is a challenging task.  An algorithm called <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a> allows us to do this effectively by visualizing the “probabilistic” distance between all observations (books) based on word collections. Two points close together doesn’t necessarily mean that they are similar (they could though!), <strong>but the important takeaway is that we see a good enough non-random pattern by genere</strong>.</p>
+
+<p>The pattern becomes clearer if we turn off series <strong>N/A (genre not available)</strong> and <strong>P (Language and Literature)</strong>, which accounts for ~50% of the sample.  <strong>Some interesting observations</strong>:</p>
+
+<ul>
+  <li><strong>Genre P (Language and Literature)</strong> is most widely spread out.  This makes sense as literature is probably the most published genre with myriads of different topics, hence the spread.</li>
+  <li><strong>Genre P (Language and Literature)</strong> also has a lot of “islands” on the 3rd quadrant (lower-left), which might be revealing “topic clusters”.  Zoom-in and hover over these points to see if you can find any similarities/patterns.  I think I’ve found a cluster of Scottish and Australian literature somewhere.</li>
+  <li><strong>Genre M (Music)</strong> and <strong>R (Medicine)</strong> have tighter clusters than other genres.  Again, we can’t say for sure that these books are necessarily similar to each other, but this might be because these two fields tend to use more jargon specific to their fields.</li>
+</ul>
+
+<p>With these evidence of non-random patterns, we can deduct that there is likely some structure underlying these texts, if learned correctly could inform our genre classification task.</p>
+
+<p><br /></p>
+
+<h1 id="classifying-different-genres">Classifying different genres</h1>
+
+<p>Let’s switch gears to classification and attempt to predict the genre of books.  It’s very unlikely that we can classify a book with reasonable accuracy if there is no underlying pattern to tell a certain genre from another.  This naturally leads to the conclusion that if we are able to come up with a model that can classify books with reasonable accuracy, then the model has learned recurring patterns underlying our large body of text.  Let’s start to see if we can formalize such pattern first by looking at all of our samples.</p>
+
+<h3 id="in-sample-classification">In-sample classification</h3>
+
+<p>As a starter, I fit a <a href="https://en.wikipedia.org/wiki/Multinomial_logistic_regression">multinomial logistics regression</a> model on the collection of words of ~45,000 books and regress that against the Library of Congressional Classification of genres.  This model allows us to classify multiple categories (genre) based on the collection and frequency of words used in each book.</p>
+
+<p>In-sample classification accuracy comes in at <strong>~82%</strong>.  This means that our model can correctly explain approximately 82% of the generes based soley on word usage.  Not bad at all.  If we unpack this overall accuracy by genere as shown in the heatmap below, we start to see that not all genre has equal performance.  Accuracy ranges from as high as 96% for genre <strong>P (Language and Literature)</strong> to as low as 2% for <strong>genre V (Naval Science)</strong>.</p>
+
+<p><img src="/images/2019-04-15-classify_gutenberg_1_files/2019-04-15-classify_gutenberg_1_18_0.png" alt="png" class="center-image" /></p>
+
+<p>If we look at <strong>accuracy vs. sample count per genre</strong>, we can see that genres with lower sample count tend to have lower accuracy.  This makes sense as with lower sample count, there is lower variance to learn patterns from compared to other genres.  This also tells me that the overall accuracy of 80% is mostly driven by books that are represented more in the sample, which also makes sense.</p>
+
+<p><img src="/images/2019-04-15-classify_gutenberg_1_files/2019-04-15-classify_gutenberg_1_20_0.png" alt="png" class="center-image" /></p>
+
+<p>The red circled genres all have higher than 75% accuracy.  <strong>Genre P (Language and Literature)</strong> has the highest accuracy at 96% and <strong>genres M(Music) and Q(Science)</strong> show great accuracies of 81% and 76% respectively despite their smaller sample size.  Music genre is especially impressive and was also highlighted in the t-SNE chart above as seeming to have a strong pattern based on word usage. D is World History; B is Philosophy, Psychology and Religion; A is General Works; and Q is Science.</p>
+
+<p><strong>Genres G (Geography, Anthropology, and Recreation), U(Military Science), J(Political Science), K(Law), C(Auxiliary Sciences of History), and V(Naval Science)</strong> in the blue circle all have lower than 50% accuracy.  Again, this might be due to lower sample size, or because our Bag-of-Words classification approach is “context-unaware”.  Similar set of words are used in these genres as others, but the distinguishing pattern could be in what order or in what combinations different words are used. Our current approach doesn’t pick up patterns like that.</p>
+
+<p><br /></p>
+
+<h3 id="the-real-classification-10-fold-cross-validation-out-of-sample-accuracy">The real classification: 10-fold cross validation (out-of-sample accuracy)</h3>
+<p>Let’s see how robust our result of ~80% overall acccuracy holds up in out-of-sample classification, that is <strong>can we predict the generes of completely new books based on other books?</strong>  I’ll run this 10 times, each time using a non-overlapping 90% sample of our data to predict the genre of the other 10% as shown below.  Each time, approximately 41,000 books are used to predict the genre of 4,600 books.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11:08:48: Testing fold 0 w/ 41204 training set and 4588 test set...
+11:09:28: Testing fold 1 w/ 41207 training set and 4585 test set...
+11:10:09: Testing fold 2 w/ 41208 training set and 4584 test set...
+11:10:54: Testing fold 3 w/ 41210 training set and 4582 test set...
+11:11:34: Testing fold 4 w/ 41212 training set and 4580 test set...
+11:12:12: Testing fold 5 w/ 41214 training set and 4578 test set...
+11:12:52: Testing fold 6 w/ 41216 training set and 4576 test set...
+11:13:35: Testing fold 7 w/ 41217 training set and 4575 test set...
+11:14:13: Testing fold 8 w/ 41219 training set and 4573 test set...
+11:14:57: Testing fold 9 w/ 41221 training set and 4571 test set...
+</code></pre></div></div>
+
+<p>Below are charts summarizing the overall and by genre accuracy for eath of the 10 iterations.  First chart shows overall accuracy of the model where 90% of sample is fit (in-sample) and the prediction (out-of-sample classification) accuracy of when this model is applied to new data (the other 10 %) to predict the genre.  Second chart breaks down the overall out-of-sample classification accuracy by genre.</p>
+<ul>
+  <li>First chart shows that the in-sample and out-of-sample accuracy is pretty close to each other.  This is good as it indicates that we are not over-fitting to sample data.  <strong>Consistent out-of-sample accuracy of around or over 80% seems pretty good as well</strong>.</li>
+  <li>Second chart tells us that accuracy by genre is also pretty stable over the 10 iterations.  This is good as well as it indicates that our model is general enough and our predictions are not sensitive to different sample.</li>
+</ul>
+
+<p><img src="/images/2019-04-15-classify_gutenberg_1_files/2019-04-15-classify_gutenberg_1_26_0.png" alt="png" class="center-image" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+<p>Honestly, I was surprised that the classification accuracy came out pretty well (consistently around ~80%) at first take with basic text cleaning and no hyper-parameter tuning at all.  This probably indicates that there is a stronger pattern in text data relative to what I initially expected in terms of which genre it belongs to.  Identifying genre of a book might be a trivial task for human beings, as you probably know what type of book it is by reading though a few pages.  I do not know of a reasonable human performance benchmark though so we can’t say for sure that this is necessarily the case.  One thing for sure is that humans cannot read through ~45,000 books within a matter of seconds and determine the genre of them nor quantify their rationale.</p>
+
+<p>There are more things I can do to improve prediction accuracy.</p>
+<ul>
+  <li>I can do some work around hyper-parameter tuning</li>
+  <li>Use non-linear models for classification such as Random Forest/XGBoost</li>
+  <li>Use a fundamentally different approch to constructing text data through <a href="https://en.wikipedia.org/wiki/Word_embedding">word embeddings</a> compared to the relatively simplistic Bag-of-Words approach.  This approach would use more sophisticated models such as <a href="https://en.wikipedia.org/wiki/Word2vec">word2vec</a> or the state-or-art <a href="https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270">BERT</a>.</li>
+</ul>
+
+<p>These are quite some work, and I may pursue a few of these when I have time in the future.  For now, I’m pretty happy with my 80% overall accuracy :).</p>
+
+<p><br /></p>
+
+<h1 id="cleaning-and-preparing-text-data">Cleaning and preparing text data</h1>
+<p>Cleaning and preparing text data was very time consuming (~2 weeks) and is a very important process in NLP that can significantly affect prediction performance.  I’ve cut some corners here and there, but below is an overview of how I prepared text data from the ~45,000 Project Gutenberg books that logistic regression is fit on.  Please read through if you’re interested in the more granular technical details on text data preparation.</p>
+
+<ol>
+  <li>Using <a href="https://spacy.io/"><strong><code class="highlighter-rouge">spaCy</code></strong></a>, tokenize, remove stop words and puncuations, and lemmatize.  This results in a corpus of ~9.7 million words.  There’s probably a lot of words/phrases that didn’t get parsed/cleaned correctly.  Let’s keep going on though.</li>
+  <li>Trim down corpus by removing words that occur in less than 1% and more than 70% of the books.  This results in a significantly reduced corpus of 300k words.  This is done to remove “outliers” to the extent they do not inform overall patterns. Cutoffs were determined based on how rapidly the corpus size declined with respect to these lower/higher-end cutoff parameters.  I chose 1% and 70% when the rapid decline seemed to taper off.</li>
+  <li>Construct document-term matrix using <strong><code class="highlighter-rouge">sklearn.feature_extraction.text.TfidfVectorizer</code></strong></li>
+  <li>Reduce dimensionality from 300k to 300 (factor of 1,000 which is randomly selected) using <strong><code class="highlighter-rouge">sklearn.decomposition.TruncatedSVD</code></strong> by taking the left singular matrix from the <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Vector Decomposition (SVD)</a> factors.  This is done to i) smoothen out the sparisity of the document-term-matrix and 2) reduce the dimension for accelerated computation.  Right singular matrix of SVD can also be used for <a href="https://en.wikipedia.org/wiki/Latent_semantic_analysis">latent semantic analysis (LSA)</a>.</li>
+</ol>
+
+        </div>
+
+        
+
+        
+          
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    <a class="page-previous" href="/docs/jupyter_nb_driven_report_blog/">
+      <h4 class="page-pagination-label">Previous</h4>
+      <span class="page-pagination-title">
+        <i class="fas fa-arrow-left"></i> Jupyter Notebook driven blog post
+
+      </span>
+    </a>
+  
+
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/atom.xml"><i class="fas fa-rss-square fa-2x" title="Feed"></i></a></div><div class="copyright">
+    
+      <p>&copy; 2019 Curious Nacho. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/mmistakes/so-simple-theme" rel="nofollow">So Simple</a>.</p>
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>

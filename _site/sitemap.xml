@@ -17,6 +17,10 @@
 <lastmod>2019-01-29T00:00:00-06:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/docs/classify_gutenberg_1/</loc>
+<lastmod>2019-04-15T00:00:00-05:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/docs/about/</loc>
 </url>
 <url>
@@ -46,5 +50,9 @@
 <url>
 <loc>http://localhost:4000/theme-setup/</loc>
 <lastmod>2018-02-02T13:12:02-06:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/images/2019-04-15-classify_gutenberg_1_files/tsne.html</loc>
+<lastmod>2019-04-15T07:29:08-05:00</lastmod>
 </url>
 </urlset>
