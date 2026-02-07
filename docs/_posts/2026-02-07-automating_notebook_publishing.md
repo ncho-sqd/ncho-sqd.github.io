@@ -3,7 +3,51 @@ title: "How This Blog Is Now Ran by Modern GitHub Actions Thanks to AI"
 author: nacho
 layout: post
 ---
-Publishing Jupyter notebooks as blog posts on this site used to be a tedious, multi-step manual process.  After not updating this blog for a while, I asked Claude (yes, an AI) to take a look at the old workflow and make it better.  It read through my janky bash script, understood the whole Jekyll setup, and built a replacement that honestly makes me wonder why I spent all those hours doing it by hand.  Here's the before and after.
+Publishing Jupyter notebooks as blog posts on this site used to be a tedious, multi-step manual process.  After not updating this blog for a while, I asked Claude (yes, an AI) to take a look at the old workflow and make it better.  It read through my janky bash script, understood the whole Jekyll setup, and built a replacement that honestly makes me wonder why I spent all those hours doing it by hand.  Here's how it works now:
+
+```
+┌─────────────────────┐
+│  Write a Jupyter     │
+│  Notebook (.ipynb)   │
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  git push to         │
+│  original_posts/     │
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────────────┐
+│           GitHub Actions Workflow                │
+│                                                  │
+│  1. Detects new/changed .ipynb files             │
+│  2. Installs Python + nbconvert                  │
+│  3. Runs publish_notebook.py                     │
+│     ┌──────────────────────────────────────┐     │
+│     │  • Converts .ipynb → .md             │     │
+│     │  • Extracts title from notebook      │     │
+│     │  • Adds Jekyll front matter          │     │
+│     │  • Rewrites image paths              │     │
+│     │  • Moves images to /images/          │     │
+│     └──────────────────────────────────────┘     │
+│  4. Commits .md + images back to repo            │
+└────────┬────────────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────────────┐
+│           GitHub Pages Build                     │
+│                                                  │
+│  • Jekyll picks up new .md in docs/_posts/       │
+│  • Builds HTML with So Simple theme              │
+│  • Deploys to ncho-sqd.github.io                 │
+└─────────────────────────────────────────────────┘
+         │
+         ▼
+    Blog post is live!
+```
+
+And here's the before and after.
 
 <br>
 
