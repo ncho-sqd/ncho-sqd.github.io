@@ -27,7 +27,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # need previous commit to detect changed files
+          fetch-depth: 0  # full history to detect changes across merges
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -48,12 +48,32 @@ jobs:
               echo "files=original_posts/" >> "$GITHUB_OUTPUT"
             fi
           else
-            # Push trigger - find changed notebooks
-            CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'original_posts/*.ipynb' | tr '\n' ' ')
+            # Push trigger - detect changed notebooks
+            # For merge commits, compare against all parents to catch all changes
+            if [ "$(git rev-list --parents -n 1 HEAD | wc -w)" -gt 2 ]; then
+              # Merge commit: diff against each parent, union the results
+              CHANGED=$(git diff --name-only HEAD^1 HEAD -- 'original_posts/*.ipynb')
+              CHANGED="$CHANGED $(git diff --name-only HEAD^2 HEAD -- 'original_posts/*.ipynb')"
+              CHANGED=$(echo "$CHANGED" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+            else
+              CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'original_posts/*.ipynb' | tr '\n' ' ')
+            fi
+
+            # Fallback: if diff missed it, check if any notebooks lack a corresponding post
+            for nb in original_posts/*.ipynb; do
+              [ -f "$nb" ] || continue
+              STEM=$(basename "$nb" .ipynb)
+              if ! ls docs/_posts/*-"$STEM".md 1>/dev/null 2>&1; then
+                CHANGED="$CHANGED $nb"
+              fi
+            done
+            CHANGED=$(echo "$CHANGED" | xargs)
+
             if [ -z "$CHANGED" ]; then
               echo "No notebook changes detected."
               echo "files=" >> "$GITHUB_OUTPUT"
             else
+              echo "Notebooks to convert: $CHANGED"
               echo "files=$CHANGED" >> "$GITHUB_OUTPUT"
             fi
           fi
