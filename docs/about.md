@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-My name is Neil. I'm a Chicago-based quantitative researcher who builds data-driven systems and all sorts of algorithmic decision-making tools as a job and a hobby.
+My name is Neil. I'm a Chicago-based quant who builds data-driven systems and all sorts of algorithmic decision-making tools as a job and a hobby.
 
 My day-to-day revolves around turning messy real-world data into something actionable — whether that's wrangling unstructured text into clean features, building models that surface signal from noise, or designing pipelines that make the whole thing run at scale.
 
