@@ -1,0 +1,84 @@
+name: Publish Notebooks
+
+on:
+  push:
+    paths:
+      - 'original_posts/**.ipynb'
+    branches:
+      - master
+
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+    inputs:
+      notebook:
+        description: 'Notebook filename in original_posts/ (leave empty to convert all)'
+        required: false
+      date:
+        description: 'Publication date (YYYY-MM-DD, leave empty for today)'
+        required: false
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # need previous commit to detect changed files
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install nbconvert jupyter
+
+      - name: Determine notebooks to convert
+        id: notebooks
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger
+            if [ -n "${{ github.event.inputs.notebook }}" ]; then
+              echo "files=original_posts/${{ github.event.inputs.notebook }}" >> "$GITHUB_OUTPUT"
+            else
+              echo "files=original_posts/" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            # Push trigger - find changed notebooks
+            CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'original_posts/*.ipynb' | tr '\n' ' ')
+            if [ -z "$CHANGED" ]; then
+              echo "No notebook changes detected."
+              echo "files=" >> "$GITHUB_OUTPUT"
+            else
+              echo "files=$CHANGED" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Convert notebooks
+        if: steps.notebooks.outputs.files != ''
+        run: |
+          DATE_ARG=""
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            DATE_ARG="--date ${{ github.event.inputs.date }}"
+          fi
+
+          for nb in ${{ steps.notebooks.outputs.files }}; do
+            python publish_notebook.py "$nb" $DATE_ARG
+          done
+
+      - name: Commit and push changes
+        if: steps.notebooks.outputs.files != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/_posts/ images/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-publish notebook(s) as blog post(s)"
+            git push
+          fi
