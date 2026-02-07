@@ -3,11 +3,11 @@ layout: page
 title: About
 ---
 
-My name is Neil and I am a data scientist living in Chicago.
+My name is Neil. I'm a Chicago-based quant who builds data-driven systems and all sorts of algorithmic decision-making tools for work and for fun.
 
-This blog is meant to be a random walk into many of my curiosities where data can provide interesting solutions and inspirations.
+My day-to-day revolves around turning messy real-world data into something actionable — whether that's wrangling unstructured text into clean features, building models that surface signal from noise, or designing pipelines that make the whole thing run at scale.
 
-I am a Pythonista, crypto enthusiast, budding mixologist and interested in personal finance, trading, and Economics/Finance in general.
+This blog is a random walk into my curiosities and innovations related to data, compute, and AI. I write about things I find genuinely interesting — from NLP experiments on tens of thousands of books to automating workflows that were slowing me down. If something sparks a question worth exploring with code and data, it'll probably end up here.
 
-I graduated from the University of Chicago with a degree in Economics, so Econometrics has been my go-to toolkit for understanding the wonderful universe of data but I am expanding my horizon into other Machine Learning techniques as well.
+Thanks for stopping by — hope you find something that sparks your curiosity too.
 <br><br><br>
